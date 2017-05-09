@@ -17,7 +17,7 @@ public class ChangeColour : MonoBehaviour {
 	
 	// Update is called once per frame
 	//J to Red, K to Blue and L to Default
-	void Update () {
+	void FixedUpdate () {
 		if (Input.GetKeyDown (KeyCode.J)) {
 			rend.material = blue;
 			Player.PlayerColour = Player.BLUE;

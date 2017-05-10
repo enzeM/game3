@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameBoundary : MonoBehaviour {
+
 	[SerializeField] private GameObject targetPlayer;
 
-	// Use this for initialization
-	void Start () {
-		
+	void Start() {
+		targetPlayer = GameObject.FindGameObjectWithTag ("Player");
 	}
 
 	// Update is called once per frame
-	void Update () {
-		transform.position = new Vector3 (targetPlayer.transform.position.x, transform.position.y, transform.position.z);		
+	void FixedUpdate () {
+		if (targetPlayer.transform.position.y > Player.LowerLimit) {
+			transform.position = new Vector3 (targetPlayer.transform.position.x, targetPlayer.transform.position.y, transform.position.z);		
+		}
 	}
 
 	void OnTriggerExit (Collider other) {
 		if (other.CompareTag ("Player")) {
 			other.gameObject.SetActive (false);
-		} 
-		if (other.CompareTag("Ground")) {
+		} else {
 			Destroy (other.gameObject);
 		}
 	}

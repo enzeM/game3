@@ -30,6 +30,7 @@ public class ChangeColour : MonoBehaviour {
 		}
 	}
 
+	//change start colour in practicle system
 	void ChangeColor(Color color) {
 		ParticleSystem.MainModule settings = GetComponent<ParticleSystem>().main;
 		settings.startColor = new ParticleSystem.MinMaxGradient (color);

@@ -11,6 +11,10 @@ public class Player : MonoBehaviour {
 	[SerializeField] public static bool autoRun = true;
 	[SerializeField] public static bool m_canDoubleJump = true;//check double jump
 
+	//param used to auto increase player's speed
+	[SerializeField] private float timeToIncreaseSpeed;
+	private float timeToIncreaseSpeedCounter;
+
 	public static int RED = 1;
 	public static int BLUE = 2;
 	public static int DEFAULT = 3;
@@ -20,12 +24,21 @@ public class Player : MonoBehaviour {
 		set;
 	}
 
+	//set player lower limit to fall
+	public int lowerLimit;
+	public static float LowerLimit {
+		get;
+		private set;
+	}
+
     private bool m_isGrounded;
     private List<Collider> m_collisions = new List<Collider>();
 
 	private void Start() {
 		m_animator = GetComponent<Animator> ();
 		m_rigidBody = GetComponent<Rigidbody> ();
+		timeToIncreaseSpeedCounter = timeToIncreaseSpeed;
+		Player.LowerLimit = this.lowerLimit;
 	}
 
     private void OnCollisionEnter(Collision collision) {
@@ -79,12 +92,21 @@ public class Player : MonoBehaviour {
 
 	void Update () {
 		HandleJump ();
+		AutoIncreaseSpeed ();
 	}
 
 	private void AutoMove () {
 		if (autoRun) {
 			m_animator.SetFloat ("hSpeed", m_moveSpeed);
 			m_rigidBody.velocity = new Vector3 (m_moveSpeed, m_rigidBody.velocity.y, 0f);
+		}
+	}
+
+	private void AutoIncreaseSpeed() {
+		timeToIncreaseSpeedCounter -= Time.deltaTime;
+		if (timeToIncreaseSpeedCounter < 0f) {
+			m_moveSpeed++;
+			timeToIncreaseSpeedCounter = timeToIncreaseSpeed;
 		}
 	}
 

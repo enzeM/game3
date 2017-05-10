@@ -3,7 +3,8 @@ a 2.5D survive action game build with Unity3D Project
 
 ## 0.Game Logic
 - ~~player run automatically with one direction~~
-- player speed will increase gradually(adaptive difficulty)
+- ~~player speed will increase gradually(adaptive difficulty)~~
+- ~~game terrain will destroy when it leave the game zone~~
 - player need to ensure their body/clothes colour is as same as the tiles colour (**done check colour, need to add player destory animation**)
 - introduce score system in game (final score = suvive time + coin collected)
 - generate game terrain randomly
@@ -17,7 +18,7 @@ a 2.5D survive action game build with Unity3D Project
 
 ## 2.Player Animation
 - ~~run~~
-- ~~jump (double jumple) (**current double jump is not perfect, can be better**) ~~
+- ~~jump (double jumple) (**current double jump is not perfect, can be better**)~~
 - ~~change body/clothes colour~~
 
 ## 3.Game Tiles/Terrain Design

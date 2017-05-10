@@ -26,6 +26,6 @@ public class ThirdPersonCamera : MonoBehaviour {
 		//remain offset when camera is rotating
 		transform.position = target.position - (rotation * offset);
 		//keep track with the target
-		transform.LookAt (target.position + new Vector3(0f, height, 0f));
+		transform.LookAt (target.position + new Vector3 (0f, height, 0f));
 	}
 }

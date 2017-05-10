@@ -4,37 +4,34 @@ using UnityEngine;
 
 public class CheckColour : MonoBehaviour {
 
-	[SerializeField] private Renderer rend;
-	[SerializeField] private int myColour;
+	public enum ItemColor {RED, BLUE, DEFAULT};
+	public ItemColor myColor;
+	public int checkColour;
 
 	// Use this for initialization
 	void Start () {
-		rend = GetComponent<Renderer> ();
-		GetObjectColour ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		initCheckColour ();
 	}
 
+	//destory player when groud color is different with player's color
 	void OnCollisionStay(Collision other) {
 		if (other.gameObject.CompareTag ("Player")) {
-			if (myColour == Player.PlayerColour) {
-				print ("same colour");
+			if (checkColour == Player.PlayerColour) {
+				//print ("same colour");
 			} else {
-				print ("not same colour destory");
+				//print ("different colour");
 			}
 		}
 	}
 
-	void GetObjectColour () {
-		if (rend.material.color == Color.red) {
-			myColour = Player.RED;
-		} else if (rend.material.color == Color.blue) {
-			myColour = Player.BLUE;
-		} else {
-			myColour = Player.DEFAULT;
+	//check ground block has same colour with player
+	private void initCheckColour () {
+		if (myColor == ItemColor.RED) {
+			checkColour = Player.RED;
+		} else if (myColor == ItemColor.BLUE) {
+			checkColour = Player.BLUE;
+		} else if (myColor == ItemColor.DEFAULT) {
+			checkColour = Player.DEFAULT;
 		}
 	}
 }

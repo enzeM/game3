@@ -8,7 +8,8 @@ public class Player : MonoBehaviour {
     [SerializeField] private Animator m_animator;
     [SerializeField] private Rigidbody m_rigidBody;
 
-    [SerializeField] private bool autoRun = false;
+	[SerializeField] public static bool autoRun = true;
+	[SerializeField] public static bool m_canDoubleJump = true;//check double jump
 
 	public static int RED = 1;
 	public static int BLUE = 2;
@@ -74,6 +75,9 @@ public class Player : MonoBehaviour {
 	void FixedUpdate () {
 		m_animator.SetBool ("isGrounded", m_isGrounded);
 		AutoMove ();
+	}
+
+	void Update () {
 		HandleJump ();
 	}
 
@@ -84,17 +88,20 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	private int m_jumpCount = 0;//double jump
-
+	//player can make a jump and double jump
 	private void HandleJump () {
-		if (m_jumpCount < 2 && !m_isGrounded && Input.GetKeyDown (KeyCode.Space)) {//double jump
-			m_rigidBody.AddForce (new Vector3 (m_rigidBody.velocity.x, m_jumpForce, m_rigidBody.velocity.z));
-			m_jumpCount++;
-		} else if (m_isGrounded && Input.GetKeyDown (KeyCode.Space)) {
-			m_rigidBody.AddForce (new Vector3 (m_rigidBody.velocity.x, m_jumpForce, m_rigidBody.velocity.z));
-			m_jumpCount++;
-		} else if (m_jumpCount >= 2 && m_isGrounded) {//reset jump count
-			m_jumpCount = 0;
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			if (m_canDoubleJump && !m_isGrounded) {//double jump
+				m_rigidBody.velocity = new Vector3 (m_rigidBody.velocity.x, 0f, m_rigidBody.velocity.z); 
+				m_rigidBody.AddForce (new Vector3 (m_rigidBody.velocity.x, m_jumpForce, m_rigidBody.velocity.z));
+				m_canDoubleJump = false;
+			} else if (m_isGrounded) { //first jump
+				m_rigidBody.velocity = new Vector3 (m_rigidBody.velocity.x, 0f, m_rigidBody.velocity.z); 
+				m_rigidBody.AddForce (new Vector3 (m_rigidBody.velocity.x, m_jumpForce, m_rigidBody.velocity.z));
+			} 
+		}
+		if (m_isGrounded) {//reset double jump when player is grounded
+			m_canDoubleJump = true;
 		}
 		m_animator.SetFloat ("vSpeed", m_rigidBody.velocity.y);
 	}

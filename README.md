@@ -17,7 +17,7 @@ a 2.5D survive action game build with Unity3D Project
 
 ## 2.Player Animation
 - ~~run~~
-- ~~jump (double jumple)~~ (**current double jump is not perfect, can be better**)
+- ~~jump (double jumple) (**current double jump is not perfect, can be better**) ~~
 - ~~change body/clothes colour~~
 
 ## 3.Game Tiles/Terrain Design

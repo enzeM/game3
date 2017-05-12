@@ -15,7 +15,7 @@ public class MapGenerator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		print (Player.OnLowGenPot);	
+		//print (Player.OnLowGenPot);	
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -28,6 +28,7 @@ public class MapGenerator : MonoBehaviour {
 	//2. create item based on generate point
 	//3. make sure mid generate point exist at least once when low generate point existed
 	//4. add-on random: the generate point position should be random in a reasonable range as well
+	//5. always check the lower limit of the player
 	private void HandleMapGeneration () {
 		int typeIndex = Random.Range (0, Grounds.Length);
 		int randVirtDist = Random.Range (16, 21);
@@ -40,12 +41,25 @@ public class MapGenerator : MonoBehaviour {
 				Player.OnLowGenPot = true;
 			}
 			Vector3 genPotPos = GeneratedPoints [genPotIndex].transform.position;
-			Vector3 itemPos = new Vector3 (genPotPos.x + randVirtDist, genPotPos.y + randHoriDist, genPotPos.z);
+			float genPotY = randHoriDist + genPotPos.y;
+			//check lower limit
+			if (genPotY < Player.LowerLimit) {
+				//print ("change genPotY");
+				genPotY = Player.LowerLimit + 2;
+			}
+
+			Vector3 itemPos = new Vector3 (genPotPos.x + randVirtDist, genPotY, genPotPos.z);
 			Instantiate (Grounds [typeIndex], itemPos, Quaternion.Euler (new Vector3 (0, 0, 0)));
 			isGenerated = true;
 		} else if(Player.OnLowGenPot) {
 			Vector3 genPotPos = GeneratedPoints [0].transform.position; //next item occur in the high
-			Vector3 itemPos = new Vector3 (genPotPos.x + 20, genPotPos.y, genPotPos.z);
+			//check lower limit
+			float genPotY = randHoriDist + genPotPos.y;
+			//check lower limit
+			if (genPotY < Player.LowerLimit) {
+				genPotY = Player.LowerLimit + 10;
+			}
+			Vector3 itemPos = new Vector3 (genPotPos.x + randVirtDist, genPotY, genPotPos.z);
 			Instantiate (Grounds [typeIndex], itemPos, Quaternion.Euler (new Vector3 (0, 0, 0)));
 			isGenerated = true;
 			Player.OnLowGenPot = false; //reset isLow

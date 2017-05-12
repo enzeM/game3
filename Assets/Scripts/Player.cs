@@ -24,6 +24,12 @@ public class Player : MonoBehaviour {
 		set;
 	}
 
+	//decide player is on low generate point
+	public static bool OnLowGenPot {
+		get;
+		set;
+	}
+
 	//set player lower limit to fall
 	public int lowerLimit;
 	public static float LowerLimit {
@@ -88,11 +94,12 @@ public class Player : MonoBehaviour {
 	void FixedUpdate () {
 		m_animator.SetBool ("isGrounded", m_isGrounded);
 		AutoMove ();
+		//AutoIncreaseSpeed ();
+		//Move();
+		HandleJump ();
 	}
 
 	void Update () {
-		HandleJump ();
-		AutoIncreaseSpeed ();
 	}
 
 	private void AutoMove () {
@@ -100,6 +107,12 @@ public class Player : MonoBehaviour {
 			m_animator.SetFloat ("hSpeed", m_moveSpeed);
 			m_rigidBody.velocity = new Vector3 (m_moveSpeed, m_rigidBody.velocity.y, 0f);
 		}
+	}
+
+	//use to test
+	private void Move() {
+		m_animator.SetFloat ("hSpeed", m_moveSpeed);
+		m_rigidBody.velocity = new Vector3 (Input.GetAxis("Horizontal") * m_moveSpeed, m_rigidBody.velocity.y, 0f);
 	}
 
 	private void AutoIncreaseSpeed() {

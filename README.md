@@ -7,7 +7,7 @@ a 2.5D survive action game build with Unity3D Project
 - ~~game terrain will destroy when it leave the game zone~~
 - player need to ensure their body/clothes colour is as same as the tiles colour (**done check colour, need to add player destory animation**)
 - introduce score system in game (final score = suvive time + coin collected)
-- generate game terrain randomly
+- ~~generate game terrain randomly~~
 - special game item (if we have time)
 - game tutorial (if we have time: **consider Fungus plugin**)
 

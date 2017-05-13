@@ -83,7 +83,6 @@ public class Player : MonoBehaviour {
 		m_animator.SetBool ("isGrounded", m_isGrounded);
 		AutoMove ();
 		AutoIncreaseSpeed ();
-		//Move();
 		HandleJump ();
 		HandleDead ();
 	}

@@ -28,7 +28,7 @@ public class ItemGenerator : MonoBehaviour {
 			int itemType = Random.Range(0, items.Length);
 			GameObject item = items[itemType];
 			//generate item from generate point 0
-			Instantiate (item, itemGeneratePoints[i].transform.position, Quaternion.Euler(new Vector3(0,0,0)));
+			Instantiate (item, itemGeneratePoints[i].transform.position, Quaternion.Euler(new Vector3(0 ,90, 0)));
 		}
 		isGenerated = true;
 	}

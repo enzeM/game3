@@ -18,9 +18,6 @@ public class MapGenerator : MonoBehaviour {
 			HandleTileGeneration ();
 		}
 	}
-		
-	void Update() {
-	}
 
 	/*
 	* 1. generate item type and genPoint position randomly

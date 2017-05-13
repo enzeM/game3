@@ -20,9 +20,8 @@ public class GameBoundary : MonoBehaviour {
 
 	void OnTriggerExit (Collider other) {
 		if (other.CompareTag ("Player")) {
-			//other.gameObject.SetActive (false);
 			Player.isDead = true;
-		} else if(other.CompareTag("Ground")) {
+		} else {
 			Destroy (other.gameObject);
 		}
 	}

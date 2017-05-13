@@ -20,10 +20,10 @@ public class Dialogue : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (isTalking) {
 			Player.autoRun = false;
-		} else {
+		} else if (! isTalking) {
 			Player.autoRun = true;
 		}	
 	}

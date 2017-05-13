@@ -5,23 +5,21 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour {
 
 	[SerializeField] private GameObject[] Grounds;
-	private bool isGenerated;
 	[SerializeField] private GameObject[] GeneratedPoints;
+	private bool isGenerated;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		isGenerated = false;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		//print (Player.OnLowGenPot);	
-	}
-
-	void OnTriggerEnter(Collider other) {
+	public void OnTriggerEnter(Collider other) {
 		if (! isGenerated && other.CompareTag ("Player")) {
-			HandleMapGeneration ();
+			HandleTileGeneration ();
 		}
+	}
+		
+	void Update() {
 	}
 
 	/*
@@ -31,11 +29,12 @@ public class MapGenerator : MonoBehaviour {
 	* 4. add-on random: the generate point position should be random in a reasonable range as well
 	* 5. always check the lower limit of the player
 	*/
-	private void HandleMapGeneration () {
+	private void HandleTileGeneration () {
 		int typeIndex = Random.Range (0, Grounds.Length);
 		int randVirtDist = Random.Range (16, 21);
 		int randHoriDist = Random.Range (-1, 1);
 
+		Vector3 itemPos;
 		if (! Player.OnLowGenPot) {
 			int genPotIndex = Random.Range (0, GeneratedPoints.Length);
 			//check ground is generated at "low" point
@@ -48,8 +47,7 @@ public class MapGenerator : MonoBehaviour {
 			if (genPotY < Player.LowerLimit) {
 				genPotY = Player.LowerLimit + 2;
 			}
-
-			Vector3 itemPos = new Vector3 (genPotPos.x + randVirtDist, genPotY, genPotPos.z);
+			itemPos = new Vector3 (genPotPos.x + randVirtDist, genPotY, genPotPos.z);
 			Instantiate (Grounds [typeIndex], itemPos, Quaternion.Euler (new Vector3 (0, 0, 0)));
 			isGenerated = true;
 		} else if(Player.OnLowGenPot) {
@@ -59,7 +57,7 @@ public class MapGenerator : MonoBehaviour {
 			if (genPotY < Player.LowerLimit) {
 				genPotY = Player.LowerLimit + 2;
 			}
-			Vector3 itemPos = new Vector3 (genPotPos.x + randVirtDist, genPotY, genPotPos.z);
+			itemPos = new Vector3 (genPotPos.x + randVirtDist, genPotY, genPotPos.z);
 			Instantiate (Grounds [typeIndex], itemPos, Quaternion.Euler (new Vector3 (0, 0, 0)));
 			isGenerated = true;
 			Player.OnLowGenPot = false; //reset on low generate point to false

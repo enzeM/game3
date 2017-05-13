@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-    [SerializeField] private float m_moveSpeed;
+	public float m_moveSpeed;
     [SerializeField] private float m_jumpForce;
     [SerializeField] private Animator m_animator;
     [SerializeField] private Rigidbody m_rigidBody;
@@ -69,14 +69,14 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-
-	private void Start() {
+	private void Start () {
 		m_animator = GetComponent<Animator> ();
 		m_rigidBody = GetComponent<Rigidbody> ();
 		timeToIncreaseSpeedCounter = timeToIncreaseSpeed;
 		Player.LowerLimit = this.lowerLimit;
 		Player.isDead = false;
 		Player.PlayerColour = DEFAULT;
+		Player.autoRun = true;
 	}
 
 	void FixedUpdate () {

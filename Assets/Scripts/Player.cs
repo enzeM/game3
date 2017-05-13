@@ -79,7 +79,7 @@ public class Player : MonoBehaviour {
 		Player.autoRun = true;
 	}
 
-	void FixedUpdate () {
+	void Update () {
 		m_animator.SetBool ("isGrounded", m_isGrounded);
 		AutoMove ();
 		AutoIncreaseSpeed ();

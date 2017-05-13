@@ -10,7 +10,7 @@ public class ChangeColour : MonoBehaviour {
 	private Color color = Color.white;
 	// Update is called once per frame
 	//J to Red, K to Blue and L to Default
-	void FixedUpdate () {
+	void Update () {
 		HandleColour ();
 	}
 

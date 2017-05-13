@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Player : MonoBehaviour {
 
@@ -9,7 +10,10 @@ public class Player : MonoBehaviour {
     [SerializeField] private Rigidbody m_rigidBody;
 
 	[SerializeField] public static bool autoRun = true;
+	[SerializeField] public static bool autoIncreaseSpeed = true;
 	[SerializeField] public static bool m_canDoubleJump = true;//check double jump
+    private List<Collider> m_collisions = new List<Collider>();
+    private bool m_isGrounded;
 
 	//param used to auto increase player's speed
 	[SerializeField] private float timeToIncreaseSpeed;
@@ -37,14 +41,51 @@ public class Player : MonoBehaviour {
 		private set;
 	}
 
-    private bool m_isGrounded;
-    private List<Collider> m_collisions = new List<Collider>();
+	//use a praticle system object to handle player's dead animation
+	private float dieTime = 1f;
+	public GameObject deadExplosion;
+	public static bool isDead {
+		get;
+		set;
+	}
+
+	//delay dead based on dead time
+	private IEnumerator Dead() {
+		yield return new WaitForSeconds (dieTime);
+		gameObject.SetActive (false);
+		yield return 0;
+	}
+
+	private void HandleDead() {
+		if (isDead) {
+			deadExplosion.SetActive (true);
+			m_animator.SetFloat ("vSpeed", 0);
+			m_moveSpeed = 0;
+			//StartCoroutine (Dead ());
+			dieTime -= Time.deltaTime;
+			if (dieTime < 0f) {
+				gameObject.SetActive (false);
+			}
+		}
+	}
+
 
 	private void Start() {
 		m_animator = GetComponent<Animator> ();
 		m_rigidBody = GetComponent<Rigidbody> ();
 		timeToIncreaseSpeedCounter = timeToIncreaseSpeed;
 		Player.LowerLimit = this.lowerLimit;
+		Player.isDead = false;
+		Player.PlayerColour = DEFAULT;
+	}
+
+	void FixedUpdate () {
+		m_animator.SetBool ("isGrounded", m_isGrounded);
+		AutoMove ();
+		AutoIncreaseSpeed ();
+		//Move();
+		HandleJump ();
+		HandleDead ();
 	}
 
     private void OnCollisionEnter(Collision collision) {
@@ -91,17 +132,6 @@ public class Player : MonoBehaviour {
 		}
     }
 
-	void FixedUpdate () {
-		m_animator.SetBool ("isGrounded", m_isGrounded);
-		AutoMove ();
-		//AutoIncreaseSpeed ();
-		//Move();
-		HandleJump ();
-	}
-
-	void Update () {
-	}
-
 	private void AutoMove () {
 		if (autoRun) {
 			m_animator.SetFloat ("hSpeed", m_moveSpeed);
@@ -109,17 +139,13 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	//use to test
-	private void Move() {
-		m_animator.SetFloat ("hSpeed", m_moveSpeed);
-		m_rigidBody.velocity = new Vector3 (Input.GetAxis("Horizontal") * m_moveSpeed, m_rigidBody.velocity.y, 0f);
-	}
-
 	private void AutoIncreaseSpeed() {
-		timeToIncreaseSpeedCounter -= Time.deltaTime;
-		if (timeToIncreaseSpeedCounter < 0f) {
-			m_moveSpeed++;
-			timeToIncreaseSpeedCounter = timeToIncreaseSpeed;
+		if (autoIncreaseSpeed) {
+			timeToIncreaseSpeedCounter -= Time.deltaTime;
+			if (timeToIncreaseSpeedCounter < 0f) {
+				m_moveSpeed++;
+				timeToIncreaseSpeedCounter = timeToIncreaseSpeed;
+			}
 		}
 	}
 

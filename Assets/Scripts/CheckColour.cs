@@ -16,10 +16,8 @@ public class CheckColour : MonoBehaviour {
 	//destory player when groud color is different with player's color
 	void OnCollisionStay(Collision other) {
 		if (other.gameObject.CompareTag ("Player")) {
-			if (checkColour == Player.PlayerColour) {
-				//print ("same colour");
-			} else {
-				//print ("different colour");
+			if (checkColour != Player.PlayerColour) {
+				Player.isDead = true;
 			}
 		}
 	}

@@ -81,10 +81,14 @@ public class Player : MonoBehaviour {
 
 	void Update () {
 		m_animator.SetBool ("isGrounded", m_isGrounded);
-		AutoMove ();
-		AutoIncreaseSpeed ();
 		HandleJump ();
 		HandleDead ();
+	}
+
+	//ensure every computer have fair init speed and increate speed frequent
+	void FixedUpdate () {
+		AutoMove ();
+		AutoIncreaseSpeed ();
 	}
 
     private void OnCollisionEnter(Collision collision) {

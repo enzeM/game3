@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
-	public void LoadLevel (int level) {
-		SceneManager.LoadScene (level);
+	public void LoadLevel (int sceneIndex) {
+		SceneManager.LoadScene (sceneIndex);
 	}
 
 	public void ContinueTutorial () {

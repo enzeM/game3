@@ -28,7 +28,7 @@ a 2.5D survive action game build with Unity3D Project
 - pitfall(not plan to do)
 
 ## 4.GameScene
-- Scene Management System
+- Scene Management System(done 80%)
 - Pause Menu
 
 ## 5.Debug and build

@@ -7,6 +7,8 @@ public class ScoreManager : MonoBehaviour {
 
 	public static int score = 0;
 	public Text scoreText;
+	public Text speedText;
+	public Player player;
 
 	[SerializeField] private float addScoreTime = 1f;
 	[SerializeField] private float addScoreCounter;
@@ -20,10 +22,13 @@ public class ScoreManager : MonoBehaviour {
 		if (!Player.isDead) {
 			addScoreCounter -= Time.deltaTime;
 			if (addScoreCounter < 0) {
+				//mornitor player score
 				score++;
 				scoreText.text = score.ToString();
 				addScoreCounter = addScoreTime;
 			}
+			//monitor player speed
+			speedText.text = player.m_moveSpeed.ToString ();
 		}
 	}
 }

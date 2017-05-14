@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour {
 
-	public static int score = 0;
+	public static int score;
 	public Text scoreText;
 	public Text speedText;
 	public Player player;
@@ -14,6 +14,7 @@ public class ScoreManager : MonoBehaviour {
 	[SerializeField] private float addScoreCounter;
 	// Use this for initialization
 	void Start () {
+		score = 0;
 		addScoreCounter = addScoreTime;	
 	}
 	
@@ -24,7 +25,7 @@ public class ScoreManager : MonoBehaviour {
 			if (addScoreCounter < 0) {
 				//mornitor player score
 				score++;
-				scoreText.text = score.ToString();
+				scoreText.text = score.ToString ();
 				addScoreCounter = addScoreTime;
 			}
 			//monitor player speed

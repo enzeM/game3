@@ -6,16 +6,26 @@ using UnityEngine.SceneManagement;
 public class PauseMenuManager : MonoBehaviour {
 	public GameObject pauseMenu;
 	private bool isPause;
+	private float delayTime = 2f;
+	private float delayCounter;
 
 	// Use this for initialization
 	void Start () {
 		isPause = false;			
+		delayCounter = delayTime;
 	}
 
 	// Update is called once per frame
 	void Update () {
 		HandleInput ();
 		ManagePause ();	
+		if (Player.isDead) {
+			delayCounter -= Time.deltaTime;
+			if (delayCounter < 0f) {
+				isPause = true;	
+				delayCounter = delayTime;
+			}
+		}
 	}
 
 	void HandleInput() {

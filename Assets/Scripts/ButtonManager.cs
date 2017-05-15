@@ -15,6 +15,11 @@ public class ButtonManager : MonoBehaviour {
 		SceneManager.LoadScene (sceneIndex);
 	}
 
+	public void StartGame() {
+		Player.autoIncreaseSpeed = true;
+		SceneManager.LoadScene ("Game");
+	}
+
     public void ExitGameBtn()
     {
         Application.Quit();

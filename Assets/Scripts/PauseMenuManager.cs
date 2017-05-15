@@ -49,11 +49,20 @@ public class PauseMenuManager : MonoBehaviour {
 	}
 
 	public void MainMenu() {
-		SceneManager.LoadScene (0);
+		SceneManager.LoadScene ("Menu");
 	}
 
 	public void Quit() {
 		Application.Quit ();
 	}
 
+	public void ContinueTutorial () {
+		Player.autoRun = true;
+	}
+
+	public void StartGame() {
+		SceneManager.LoadScene ("Game");
+		Player.autoIncreaseSpeed = true;
+		Player.autoRun = true;
+	}
 }

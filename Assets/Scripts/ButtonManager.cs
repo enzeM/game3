@@ -20,6 +20,11 @@ public class ButtonManager : MonoBehaviour {
 		SceneManager.LoadScene ("Game");
 	}
 
+	public void SpeedMode() {
+		Player.autoIncreaseSpeed = true;
+		SceneManager.LoadScene ("Speed");
+	}
+
     public void ExitGameBtn()
     {
         Application.Quit();

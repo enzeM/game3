@@ -8,6 +8,8 @@ public class ScoreManager : MonoBehaviour {
 	public static int score;
 	public static int bestScore = 0;
 	public static float topSpeed = 5;
+	//used to track player highest speed before death
+	private static float currentSpeed = 0;
 
 	public Text scoreText;
 	public Text speedText;
@@ -36,18 +38,21 @@ public class ScoreManager : MonoBehaviour {
 			}
 			//monitor player speed
 			speedText.text = player.m_moveSpeed.ToString ();
-			//update best score when player had dead
+			currentSpeed = player.m_moveSpeed;
+
+		//update best score when player had dead
 		} else if (Player.isDead) {
 			if (!isTestSpeed) {
 				if (score > bestScore) {
 					bestScore = score;
 				}
 			} else if (isTestSpeed) {
-				if (player.m_moveSpeed > topSpeed) {
-					topSpeed = player.m_moveSpeed;
+				if (currentSpeed > topSpeed) {
+					topSpeed = currentSpeed;
 				}
 			}
 		}
+		//update best score or top speed info
 		if (!isTestSpeed) {
 			bestScoreText.text = bestScore.ToString ();
 		} else if (isTestSpeed) {
